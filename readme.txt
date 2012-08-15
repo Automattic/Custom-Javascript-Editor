@@ -1,4 +1,4 @@
-=== Custom Javascript Editor ===
+=== WordPress.com Custom Javascript ===
 Contributors: automattic, betzster
 Tags: javascript
 Requires at least: 3.4
@@ -13,7 +13,7 @@ Write custom javascript right from wp-admin!
 
 Write custom javascript right from wp-admin!
 
-If you'd like to check out the code and contribute, [join us on GitHub](https://github.com/Automattic/custom-javascript-editor). Pull requests are more than welcome!
+If you'd like to check out the code and contribute, [join us on GitHub](https://github.com/Automattic/WordPress.com-Custom-Javascript). Pull requests are more than welcome!
 
 == Installation ==
 
