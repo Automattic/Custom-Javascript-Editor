@@ -28,10 +28,12 @@ class Custom_Javascript_Editor {
 	}
 
 	function admin_scripts() {
-		wp_enqueue_script( 'json2', plugins_url( 'jslint/json2.js', __FILE__ ) );
-		wp_enqueue_script( 'jslint', plugins_url( 'jslint/jslint.js', __FILE__ ) );
-		wp_enqueue_script( 'adsafe', plugins_url( 'jslint/adsafe.js', __FILE__ ) );
-		wp_enqueue_script( 'intercept', plugins_url( 'jslint/intercept.js', __FILE__ ), array( 'adsafe' ) );
+		if ( $_REQUEST['page'] == 'custom-javascript' ) {
+			wp_enqueue_script( 'json2', plugins_url( 'jslint/json2.js', __FILE__ ) );
+			wp_enqueue_script( 'jslint', plugins_url( 'jslint/jslint.js', __FILE__ ) );
+			wp_enqueue_script( 'adsafe', plugins_url( 'jslint/adsafe.js', __FILE__ ) );
+			wp_enqueue_script( 'intercept', plugins_url( 'jslint/intercept.js', __FILE__ ), array( 'adsafe' ) );
+		}
 	}
 
 	function print_scripts() {
