@@ -21,6 +21,9 @@ class Custom_Javascript_Editor {
 
 		add_action( 'admin_menu', array( $this, 'menu' ) );
 		add_action( 'admin_init', array( $this, 'handle_form' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
+
+		// Print scripts on the front end
 		add_action( 'wp_print_footer_scripts', array( $this, 'print_scripts' ), 100 );
 	}
 
@@ -123,6 +126,13 @@ class Custom_Javascript_Editor {
 		}
 	}
 
+	function admin_scripts() {
+		if ( isset( $_REQUEST['page'] ) && self::SLUG == $_REQUEST['page'] ) {
+			wp_enqueue_script( 'jslint', plugins_url( '/jslint/jslint.js', __FILE__ ) );
+			wp_enqueue_script( 'initui', plugins_url( '/jslint/initui.js', __FILE__ ), array( 'jquery', 'jslint' ) );
+		}
+	}
+
 	function javascript_editor() {
 		global $screen_layout_columns;
 		?>
@@ -131,12 +141,16 @@ class Custom_Javascript_Editor {
 			<h2><?php esc_html_e( 'Custom Javascript', 'custom-javascript' ); ?></h2>
 			<form style="margin-top: 10px;" method="POST">
 				<?php wp_nonce_field( 'custom-javascript-editor', 'custom-javascript-editor' ) ?>
-				<div id="JSLINT_SOURCE"><textarea name="javascript" rows=20 style="width: 100%"><?php
+				<textarea name="javascript" rows=20 style="width: 100%"><?php
 					if ( get_option( 'custom-javascript-editor' ) )
 						echo stripslashes( $this->get_js() );
-				?></textarea></div>
+				?></textarea>
 				<?php submit_button( __( 'Update' ), 'button-primary alignright', 'update', false, array( 'accesskey' => 's' ) ); ?>
 			</form>
+			<div id="jslint_errors">
+				<h3>Errors</h3>
+				<div class="errors"></div>
+			</div>
 			<div id="poststuff" style="clear:both;" class="metabox-holder<?php echo 2 == $screen_layout_columns ? ' has-right-sidebar' : ''; ?>">
 			<?php
 				add_meta_box( 'revisionsdiv', __( 'Javascript Revisions' ), array( $this, 'revisions_meta_box' ), 'custom-javascript', 'normal' );
