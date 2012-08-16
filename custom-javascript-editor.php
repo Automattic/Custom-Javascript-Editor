@@ -80,7 +80,11 @@ class Custom_Javascript_Editor {
 		$js_post['post_content'] = $js;
 
 		if ( false === $is_preview )
-			wp_update_post( $js_post );
+			return wp_update_post( $js_post );
+	}
+
+	function saved() {
+		echo '<div id="message" class="updated fade"><p><strong>' . __('Javascript saved.') . '</strong></p></div>';
 	}
 
 	function menu() {
@@ -141,7 +145,11 @@ class Custom_Javascript_Editor {
 		$js = esc_html( $js );
 
 		//save
-		$this->save_revision( $js );
+		$saved = $this->save_revision( $js );
+
+		//tell user we saved
+		if ( $saved )
+			add_action( 'admin_notices', array( $this, 'saved' ) );
 
 		return;
 	}
