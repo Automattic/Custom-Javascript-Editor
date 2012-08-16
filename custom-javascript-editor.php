@@ -30,10 +30,6 @@ class Custom_Javascript_Editor {
 		) );
 	}
 
-	function js() {
-		echo get_js();
-	}
-
 	function get_js() {
 		if( !$post = $this->get_js_post() )
 			return false;
