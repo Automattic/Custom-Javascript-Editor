@@ -16,6 +16,9 @@ class Custom_Javascript_Editor {
 	function __construct() {
 		add_action( 'init', array( $this, 'create_post_type' ) );
 
+		// Override the edit link
+		add_filter( 'get_edit_post_link', array( $this, 'revision_edit_link' ) );
+
 		add_action( 'admin_menu', array( $this, 'menu' ) );
 		add_action( 'admin_init', array( $this, 'handle_form' ) );
 		add_action( 'wp_print_footer_scripts', array( $this, 'print_scripts' ), 100 );
@@ -87,6 +90,30 @@ class Custom_Javascript_Editor {
 		echo '<div id="message" class="updated fade"><p><strong>' . __('Javascript saved.') . '</strong></p></div>';
 	}
 
+	function revisions_meta_box() {
+		$post = $this->get_js_post();
+		$args = array(
+			'numberposts' => 5,
+			'orderby' => 'ID',
+			'order' => 'DESC'
+		);
+
+		if ( isset( $_GET['show_all_rev'] ) )
+			unset( $args['numberposts'] );
+
+		wp_list_post_revisions( $post['ID'], $args );
+	}
+
+	function revision_edit_link( $post_link ) {
+		global $post;
+
+		if ( isset( $post ) && self::OPTION == $post->post_type )
+			if ( strstr( $post_link, 'action=edit' ) )
+				$post_link = 'themes.php?page=' . self::SLUG;
+
+		return $post_link;
+	}
+
 	function menu() {
 		$title = __( 'Custom Javascript' );
 		add_theme_page( $title, $title, 'edit_theme_options', self::SLUG, array( $this, 'javascript_editor' ) );
@@ -108,7 +135,9 @@ class Custom_Javascript_Editor {
 		}
 	}
 
-	function javascript_editor() { ?>
+	function javascript_editor() {
+		global $screen_layout_columns;
+		?>		
 		<div class="wrap">
 			<?php screen_icon(); ?>
 			<h2><?php _e( 'Custom Javascript' ); ?></h2>
@@ -129,6 +158,12 @@ class Custom_Javascript_Editor {
 				<div id="JSLINT_JSLINT"></div>
 
 				<script src="<?php echo plugins_url( 'jslint/init_ui.js', __FILE__ ); ?>"></script>
+			</div>
+			<div id="poststuff" class="metabox-holder<?php echo 2 == $screen_layout_columns ? ' has-right-sidebar' : ''; ?>">
+			<?php
+				add_meta_box( 'revisionsdiv', __( 'Javascript Revisions' ), array( $this, 'revisions_meta_box' ), 'custom-javascript', 'normal' );
+				do_meta_boxes( 'custom-javascript', 'normal', $this->get_js_post() );
+			?>
 			</div>
 		</div>
 <?php }
