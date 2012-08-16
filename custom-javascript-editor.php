@@ -22,9 +22,6 @@ class Custom_Javascript_Editor {
 		add_action( 'admin_menu', array( $this, 'menu' ) );
 		add_action( 'admin_init', array( $this, 'handle_form' ) );
 		add_action( 'wp_print_footer_scripts', array( $this, 'print_scripts' ), 100 );
-
-		// Load JSLint
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 	}
 
 	function create_post_type() {
@@ -86,10 +83,6 @@ class Custom_Javascript_Editor {
 			return wp_update_post( $js_post );
 	}
 
-	function saved() {
-		echo '<div id="message" class="updated fade"><p><strong>' . __('Javascript saved.') . '</strong></p></div>';
-	}
-
 	function revisions_meta_box() {
 		$post = $this->get_js_post();
 		$args = array(
@@ -119,13 +112,8 @@ class Custom_Javascript_Editor {
 		add_theme_page( $title, $title, 'edit_theme_options', self::SLUG, array( $this, 'javascript_editor' ) );
 	}
 
-	function admin_scripts() {
-		if ( isset( $_REQUEST['page'] ) && $_REQUEST['page'] == 'custom-javascript' ) {
-			wp_enqueue_script( 'json2', plugins_url( 'jslint/json2.js', __FILE__ ) );
-			wp_enqueue_script( 'jslint', plugins_url( 'jslint/jslint.js', __FILE__ ) );
-			wp_enqueue_script( 'adsafe', plugins_url( 'jslint/adsafe.js', __FILE__ ) );
-			wp_enqueue_script( 'intercept', plugins_url( 'jslint/intercept.js', __FILE__ ), array( 'adsafe' ) );
-		}
+	function saved() {
+		echo '<div id="message" class="updated fade"><p><strong>' . __('Javascript saved.', 'safecss') . '</strong></p></div>';
 	}
 
 	function print_scripts() {
@@ -137,29 +125,19 @@ class Custom_Javascript_Editor {
 
 	function javascript_editor() {
 		global $screen_layout_columns;
-		?>		
-		<div class="wrap">
+		?>
+		<div class=wrap>
 			<?php screen_icon(); ?>
-			<h2><?php _e( 'Custom Javascript' ); ?></h2>
-
-			<div id="JSLINT_">
-				<form style="margin-top: 10px;" method="POST">
-					<?php wp_nonce_field( 'custom-javascript-editor', 'custom-javascript-editor' ) ?>
-					<div id="JSLINT_SOURCE"><textarea name="javascript" rows=20 style="width: 100%"><?php
-						if ( get_option( 'custom-javascript-editor' ) )
-							echo stripslashes( $this->get_js() );
-					?></textarea></div>
-					<?php submit_button( __( 'Update' ), 'button-primary alignright', 'update', false, array( 'accesskey' => 's' ) ); ?>
-				</form>
-				<div id="JSLINT_EDITION" style="display: none;"></div>
-				<div id="JSLINT_ERRORS" style="display: none;"><h1>Errors</h1><div></div></div>
-				<div id="JSLINT_REPORT" style="display: none;"><h1>Function Report</h1><div></div></div>
-				<div id="JSLINT_PROPERTIES" style="display: none;"></div>
-				<div id="JSLINT_JSLINT"></div>
-
-				<script src="<?php echo plugins_url( 'jslint/init_ui.js', __FILE__ ); ?>"></script>
-			</div>
-			<div id="poststuff" class="metabox-holder<?php echo 2 == $screen_layout_columns ? ' has-right-sidebar' : ''; ?>">
+			<h2><?php esc_html_e( 'Custom Javascript', 'custom-javascript' ); ?></h2>
+			<form style="margin-top: 10px;" method="POST">
+				<?php wp_nonce_field( 'custom-javascript-editor', 'custom-javascript-editor' ) ?>
+				<div id="JSLINT_SOURCE"><textarea name="javascript" rows=20 style="width: 100%"><?php
+					if ( get_option( 'custom-javascript-editor' ) )
+						echo stripslashes( $this->get_js() );
+				?></textarea></div>
+				<?php submit_button( __( 'Update' ), 'button-primary alignright', 'update', false, array( 'accesskey' => 's' ) ); ?>
+			</form>
+			<div id="poststuff" style="clear:both;" class="metabox-holder<?php echo 2 == $screen_layout_columns ? ' has-right-sidebar' : ''; ?>">
 			<?php
 				add_meta_box( 'revisionsdiv', __( 'Javascript Revisions' ), array( $this, 'revisions_meta_box' ), 'custom-javascript', 'normal' );
 				do_meta_boxes( 'custom-javascript', 'normal', $this->get_js_post() );
@@ -181,8 +159,6 @@ class Custom_Javascript_Editor {
 
 		//save
 		$saved = $this->save_revision( $js );
-
-		//tell user we saved
 		if ( $saved )
 			add_action( 'admin_notices', array( $this, 'saved' ) );
 
