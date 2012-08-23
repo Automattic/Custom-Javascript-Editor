@@ -28,6 +28,10 @@ class Custom_Javascript_Editor {
 		add_action( 'admin_init', array( $this, 'handle_form' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 
+		// Show an updated message if things have been updated
+		if ( isset( $_REQUEST['page'], $_REQUEST['message'] ) && self::PAGE_SLUG == $_REQUEST['page'] && 'updated' == $_REQUEST['message'] )
+			add_action( 'admin_notices', array( $this, 'saved' ) );
+
 		// Print scripts on the front end
 		add_action( 'wp_print_footer_scripts', array( $this, 'print_scripts' ), 100 );
 	}
@@ -191,10 +195,14 @@ class Custom_Javascript_Editor {
 
 		//save
 		$saved = $this->save_revision( $js );
-		if ( $saved )
-			add_action( 'admin_notices', array( $this, 'saved' ) );
 
-		return;
+		$query_args = array(
+				'page'       => self::PAGE_SLUG,
+				'message'    => 'updated',
+			);
+		$admin_page = add_query_arg( $query_args, admin_url( $this->parent_slug ) );
+		wp_safe_redirect( $admin_page );
+		exit;
 	}
 
 }
