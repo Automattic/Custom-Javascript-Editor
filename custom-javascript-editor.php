@@ -181,6 +181,9 @@ class Custom_Javascript_Editor {
 
 		check_admin_referer( 'custom-javascript-editor', 'custom-javascript-editor' );
 
+		if ( !current_user_can( $this->capability ) )
+			wp_die( __( "Whoops, you don't have permission to do that.", 'custom-javascript-editor' ) );
+
 		//process
 		$js = $_REQUEST['javascript'];
 		$js = wp_kses( $js, array('script') );
