@@ -129,8 +129,7 @@ class Custom_Javascript_Editor {
 	}
 
 	function menu() {
-		$title = __( 'Custom Javascript', 'custom-javascript-editor' );
-		add_submenu_page( $this->parent_slug, $title, $title, $this->capability, self::PAGE_SLUG, array( $this, 'javascript_editor' ) );
+		add_submenu_page( $this->parent_slug, __( 'Custom Javascript Editor', 'custom-javascript-editor' ), __( 'Custom Javascript', 'custom-javascript-editor' ), $this->capability, self::PAGE_SLUG, array( $this, 'javascript_editor' ) );
 	}
 
 	function saved() {
@@ -156,7 +155,7 @@ class Custom_Javascript_Editor {
 		?>
 		<div class="wrap">
 			<?php screen_icon(); ?>
-			<h2><?php esc_html_e( 'Custom Javascript', 'custom-javascript-editor' ); ?></h2>
+			<h2><?php esc_html_e( 'Custom Javascript Editor', 'custom-javascript-editor' ); ?></h2>
 			<form style="margin-top: 10px;" method="POST">
 				<?php wp_nonce_field( 'custom-javascript-editor', 'custom-javascript-editor' ) ?>
 				<textarea name="javascript" rows=20 style="width: 100%"><?php
