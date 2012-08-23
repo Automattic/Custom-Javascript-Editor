@@ -41,6 +41,8 @@ class Custom_Javascript_Editor {
 				'supports' => array(
 						'revisions',
 					),
+				'public' => false,
+				'rewrite' => false,
 			);
 		register_post_type( self::POST_TYPE, $args );
 	}
