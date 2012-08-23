@@ -13,8 +13,13 @@ class Custom_Javascript_Editor {
 	const OPTION = 'customjs';
 	const SLUG = 'custom-javascript';
 
+	var $parent_slug = 'themes.php';
+	var $capability = 'edit_theme_options';
+
 	function __construct() {
-		add_action( 'init', array( $this, 'create_post_type' ) );
+
+		// Register the post type and allow the menu position and capability to be filtered
+		add_action( 'init', array( $this, 'action_init' ) );
 
 		// Override the edit link
 		add_filter( 'get_edit_post_link', array( $this, 'revision_edit_link' ) );
@@ -27,10 +32,17 @@ class Custom_Javascript_Editor {
 		add_action( 'wp_print_footer_scripts', array( $this, 'print_scripts' ), 100 );
 	}
 
-	function create_post_type() {
-		register_post_type( self::OPTION, array(
-			'supports' => array( 'revisions' )
-		) );
+	function action_init() {
+
+		$this->parent_slug = apply_filters( 'cje_parent_slug', $this->parent_slug );
+		$this->capability = apply_filters( 'cje_capability', $this->capability );
+
+		$args = array(
+				'supports' => array(
+						'revisions',
+					),
+			);
+		register_post_type( self::OPTION, $args );
 	}
 
 	function get_js() {
@@ -112,7 +124,7 @@ class Custom_Javascript_Editor {
 
 	function menu() {
 		$title = __( 'Custom Javascript' );
-		add_theme_page( $title, $title, 'edit_theme_options', self::SLUG, array( $this, 'javascript_editor' ) );
+		add_submenu_page( $this->parent_slug, $title, $title, $this->capability, self::SLUG, array( $this, 'javascript_editor' ) );
 	}
 
 	function saved() {
