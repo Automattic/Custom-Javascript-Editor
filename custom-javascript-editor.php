@@ -1,5 +1,5 @@
 <?php /*
-Plugin Name:  WordPress.com Custom Javascript Editor
+Plugin Name:  Custom Javascript Editor
 Plugin URI:   http://github.com/Automattic/custom-javascript-editor
 Description:  Write custom javascript right from wp-admin!
 Version:      1.0

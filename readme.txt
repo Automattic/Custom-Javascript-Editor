@@ -1,5 +1,5 @@
-=== WordPress.com Custom Javascript ===
-Contributors: automattic, betzster
+=== Custom Javascript Editor ===
+Contributors: automattic, betzster, danielbachhuber
 Tags: javascript
 Requires at least: 3.4
 Tested up to: 3.4.1
