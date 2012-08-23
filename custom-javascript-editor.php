@@ -162,7 +162,7 @@ class Custom_Javascript_Editor {
 				<?php submit_button( __( 'Update', 'custom-javascript-editor' ), 'button-primary alignright', 'update', false, array( 'accesskey' => 's' ) ); ?>
 			</form>
 			<div id="jslint_errors">
-				<h3>Errors</h3>
+				<h3><?php esc_html_e( 'Errors', 'custom-javascript-editor' ); ?></h3>
 				<div class="errors"></div>
 			</div>
 			<div id="poststuff" style="clear:both;" class="metabox-holder<?php echo 2 == $screen_layout_columns ? ' has-right-sidebar' : ''; ?>">
