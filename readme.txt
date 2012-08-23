@@ -22,6 +22,12 @@ If you'd like to check out the code and contribute, [join us on GitHub](https://
 1. Upload the `custom-javascript-editor` folder to your plugins directory (e.g. `/wp-content/plugins/`)
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
+== Screenshots ==
+
+1. The back end editor
+2. The front end editor
+3. The front end editor
+
 == Changelog ==
 
 = 0.9 =
