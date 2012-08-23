@@ -1,8 +1,8 @@
 <?php /*
 Plugin Name:  Custom Javascript Editor
-Plugin URI:   http://github.com/Automattic/custom-javascript-editor
-Description:  Write custom javascript right from wp-admin!
-Version:      1.0
+Plugin URI:   http://wordpress.org/extend/plugins/custom-javascript-editor/
+Description:  Add custom Javascript to your site from an editor in the WordPress admin
+Version:      0.9
 Author:       Automattic
 Author URI:   http://automattic.com
 License:      GPLv2 or later

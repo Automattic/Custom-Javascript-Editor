@@ -3,17 +3,19 @@ Contributors: automattic, betzster, danielbachhuber
 Tags: javascript
 Requires at least: 3.4
 Tested up to: 3.4.1
-Stable tag: 1.0
+Stable tag: 0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Write custom javascript right from wp-admin!
+Add custom Javascript to your site from an editor in the WordPress admin
 
 == Description ==
 
-Write custom javascript right from wp-admin!
+Add custom Javascript to your site from an editor in the WordPress admin.
 
-If you'd like to check out the code and contribute, [join us on GitHub](https://github.com/Automattic/WordPress.com-Custom-Javascript). Pull requests are more than welcome!
+Your code is stored and revisioned with a custom post type, so you can always go back to a previous working state.
+
+If you'd like to check out the code and contribute, [join us on GitHub](https://github.com/Automattic/Custom-Javascript-Editor). Pull requests are more than welcome!
 
 == Installation ==
 
@@ -22,5 +24,5 @@ If you'd like to check out the code and contribute, [join us on GitHub](https://
 
 == Changelog ==
 
-= 1.0 =
+= 0.9 =
 * Initial release
