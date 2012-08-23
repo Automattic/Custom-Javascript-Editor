@@ -150,7 +150,7 @@ class Custom_Javascript_Editor {
 	function javascript_editor() {
 		global $screen_layout_columns;
 		?>
-		<div class=wrap>
+		<div class="wrap">
 			<?php screen_icon(); ?>
 			<h2><?php esc_html_e( 'Custom Javascript', 'custom-javascript-editor' ); ?></h2>
 			<form style="margin-top: 10px;" method="POST">
