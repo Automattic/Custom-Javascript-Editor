@@ -132,7 +132,7 @@ class Custom_Javascript_Editor {
 	}
 
 	function print_scripts() {
-		if ( ! is_admin() && strlen( get_option( 'custom-javascript-editor' ) ) > 0 ) { ?>
+		if ( ! is_admin() && strlen( $this->get_js() ) > 0 ) { ?>
 				<script><?php echo wp_kses_decode_entities( stripslashes( $this->get_js() ) ); ?></script>
 <?php
 		}
@@ -154,7 +154,7 @@ class Custom_Javascript_Editor {
 			<form style="margin-top: 10px;" method="POST">
 				<?php wp_nonce_field( 'custom-javascript-editor', 'custom-javascript-editor' ) ?>
 				<textarea name="javascript" rows=20 style="width: 100%"><?php
-					if ( get_option( 'custom-javascript-editor' ) )
+					if ( $this->get_js() )
 						echo stripslashes( $this->get_js() );
 				?></textarea>
 				<?php submit_button( __( 'Update', 'custom-javascript-editor' ), 'button-primary alignright', 'update', false, array( 'accesskey' => 's' ) ); ?>
