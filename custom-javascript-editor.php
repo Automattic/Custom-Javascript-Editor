@@ -10,8 +10,8 @@ License:      GPLv2 or later
 
 class Custom_Javascript_Editor {
 
-	const OPTION = 'customjs';
-	const SLUG = 'custom-javascript';
+	const POST_TYPE = 'customjs';
+	const PAGE_SLUG = 'custom-javascript';
 
 	var $parent_slug = 'themes.php';
 	var $capability = 'edit_theme_options';
@@ -42,7 +42,7 @@ class Custom_Javascript_Editor {
 						'revisions',
 					),
 			);
-		register_post_type( self::OPTION, $args );
+		register_post_type( self::POST_TYPE, $args );
 	}
 
 	function get_js() {
@@ -55,8 +55,8 @@ class Custom_Javascript_Editor {
 	function get_js_post() {
 		$args = array(
 			'numberposts' => 1,
-			'post_type' => self::OPTION,
-			'post_status' => 'publish'
+			'post_type' => self::POST_TYPE,
+			'post_status' => 'publish',
 		);
 
 		if ( $post = array_shift( get_posts( $args ) ) )
@@ -84,7 +84,7 @@ class Custom_Javascript_Editor {
 			$post = array(
 				'post_content' => $js,
 				'post_status' => 'publish',
-				'post_type' => self::OPTION
+				'post_type' => self::POST_TYPE,
 			);
 
 			$post_id = wp_insert_post( $post );
@@ -115,16 +115,16 @@ class Custom_Javascript_Editor {
 	function revision_edit_link( $post_link ) {
 		global $post;
 
-		if ( isset( $post ) && self::OPTION == $post->post_type )
+		if ( isset( $post ) && self::POST_TYPE == $post->post_type )
 			if ( strstr( $post_link, 'action=edit' ) )
-				$post_link = 'themes.php?page=' . self::SLUG;
+				$post_link = 'themes.php?page=' . self::PAGE_SLUG;
 
 		return $post_link;
 	}
 
 	function menu() {
 		$title = __( 'Custom Javascript', 'custom-javascript-editor' );
-		add_submenu_page( $this->parent_slug, $title, $title, $this->capability, self::SLUG, array( $this, 'javascript_editor' ) );
+		add_submenu_page( $this->parent_slug, $title, $title, $this->capability, self::PAGE_SLUG, array( $this, 'javascript_editor' ) );
 	}
 
 	function saved() {
@@ -139,7 +139,7 @@ class Custom_Javascript_Editor {
 	}
 
 	function admin_scripts() {
-		if ( isset( $_REQUEST['page'] ) && self::SLUG == $_REQUEST['page'] ) {
+		if ( isset( $_REQUEST['page'] ) && self::POST_TYPE == $_REQUEST['page'] ) {
 			wp_enqueue_script( 'jslint', plugins_url( '/jslint/jslint.js', __FILE__ ) );
 			wp_enqueue_script( 'initui', plugins_url( '/jslint/initui.js', __FILE__ ), array( 'jquery', 'jslint' ) );
 		}
@@ -173,7 +173,7 @@ class Custom_Javascript_Editor {
 <?php }
 
 	function handle_form() {
-		if ( !isset( $_REQUEST['javascript'] ) || !isset( $_REQUEST['page'] ) || self::SLUG != $_REQUEST['page'] )
+		if ( !isset( $_REQUEST['javascript'] ) || !isset( $_REQUEST['page'] ) || self::POST_TYPE != $_REQUEST['page'] )
 			return;
 
 		check_admin_referer( 'custom-javascript-editor', 'custom-javascript-editor' );
