@@ -175,7 +175,8 @@ class Custom_Javascript_Editor {
 <?php }
 
 	function handle_form() {
-		if ( !isset( $_REQUEST['javascript'] ) || !isset( $_REQUEST['page'] ) || self::POST_TYPE != $_REQUEST['page'] )
+
+		if ( !isset( $_REQUEST['javascript'] ) || !isset( $_REQUEST['page'] ) || self::PAGE_SLUG != $_REQUEST['page'] )
 			return;
 
 		check_admin_referer( 'custom-javascript-editor', 'custom-javascript-editor' );
