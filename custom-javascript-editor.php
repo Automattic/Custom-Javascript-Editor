@@ -138,7 +138,7 @@ class Custom_Javascript_Editor {
 
 	function print_scripts() {
 		if ( ! is_admin() && strlen( $this->get_js() ) > 0 ) { ?>
-				<script><?php echo $this->js_decode_entities( $this->get_js() ); ?></script>
+				<script><?php echo html_entity_decode( wp_kses_decode_entities( $this->get_js() ) ); ?></script>
 <?php
 		}
 	}
@@ -160,7 +160,7 @@ class Custom_Javascript_Editor {
 				<?php wp_nonce_field( 'custom-javascript-editor', 'custom-javascript-editor' ) ?>
 				<textarea name="javascript" rows=20 style="width: 100%"><?php
 					if ( $this->get_js() )
-						echo esc_textarea( $this->js_decode_entities( $this->get_js() ) );
+						echo esc_textarea( html_entity_decode( wp_kses_decode_entities( $this->get_js() ) ) );
 				?></textarea>
 				<?php submit_button( __( 'Update', 'custom-javascript-editor' ), 'button-primary alignright', 'update', false, array( 'accesskey' => 's' ) ); ?>
 			</form>
@@ -202,13 +202,6 @@ class Custom_Javascript_Editor {
 		$admin_page = add_query_arg( $query_args, admin_url( $this->parent_slug ) );
 		wp_safe_redirect( $admin_page );
 		exit;
-	}
-
-	function js_decode_entities( $content ) {
-		$content = str_replace( "&gt;", ">", $content );
-		$content = str_replace( "&lt;", "<", $content );
-		$content = str_replace( "&quot;", '"', $content );
-		return wp_kses_decode_entities( $content );
 	}
 
 }
