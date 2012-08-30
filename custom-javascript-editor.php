@@ -100,10 +100,9 @@ class Custom_Javascript_Editor {
 	function get_scripts_box(){
 		$cje_scripts = get_option('cje_scripts');
 		
-		foreach($this->js_scripts as $handle => $name){
-			in_array($handle, $cje_scripts)? $checked='checked':$checked ='';
-			echo '<input type="checkbox" name="js_scripts[]" value="'.$handle.'" '.$checked.'>'.$name.'<br />';
-			?>
+		foreach($this->js_scripts as $handle => $name){ ?>
+			<input type="checkbox" name="js_scripts[]" value="<?php echo $handle; ?>" 
+				<?php echo in_array($handle, $cje_scripts)? 'checked':'' ?>><?php echo $name; ?><br />
 			<?php
 		}
 	}
@@ -209,7 +208,8 @@ class Custom_Javascript_Editor {
 						?></textarea>
 					</div>
 					<div id="frameworks_container" style="float: right; width: 20%; height: 350px;">
-						<div style="padding-left: 20px;">
+						<div style="padding-left: 20px">
+							<h3 style="margin: 0;"><?php esc_html_e( 'Load also:', 'custom-javascript-editor' ); ?></h3><br />
 							<?php $this->get_scripts_box(); ?>
 						</div>
 					</div>
