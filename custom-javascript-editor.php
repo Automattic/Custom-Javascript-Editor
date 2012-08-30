@@ -209,7 +209,7 @@ class Custom_Javascript_Editor {
 					</div>
 					<div id="frameworks_container" style="float: right; width: 20%; height: 350px;">
 						<div style="padding-left: 20px">
-							<h3 style="margin: 0;"><?php esc_html_e( 'Load also:', 'custom-javascript-editor' ); ?></h3><br />
+							<h3 style="margin: 0;"><?php esc_html_e( 'Load also:', 'custom-javascript-editor' ); ?></h3><br /> 
 							<?php $this->get_scripts_box(); ?>
 						</div>
 					</div>
