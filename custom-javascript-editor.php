@@ -98,7 +98,7 @@ class Custom_Javascript_Editor {
 	}
 
 	function get_scripts_box(){
-		$cje_scripts = get_option('cje_scripts');
+		$cje_scripts = get_option('cje_scripts',array());
 		
 		foreach($this->js_scripts as $handle => $name){ ?>
 			<input type="checkbox" name="js_scripts[]" value="<?php echo $handle; ?>" 
@@ -108,8 +108,11 @@ class Custom_Javascript_Editor {
 	}
 
 	function enqueue_selected_scripts(){
-		foreach(get_option('cje_scripts') as $handle){
-			wp_enqueue_script($handle);
+		$cje_scripts = get_option('cje_scripts');
+		if($cje_scripts){
+			foreach($cje_scripts as $handle){
+				wp_enqueue_script($handle);
+			}	
 		}
 	}
 
@@ -247,6 +250,8 @@ class Custom_Javascript_Editor {
 		//save selected wp scripts
 		if(isset($_REQUEST['js_scripts'])){
 			update_option('cje_scripts', $_REQUEST['js_scripts']);	
+		} else {
+			delete_option('cje_scripts');
 		}
 
 		//save
