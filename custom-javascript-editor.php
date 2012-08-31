@@ -10,6 +10,30 @@ License:      GPLv2 or later
 
 class Custom_Javascript_Editor {
 
+	var $js_scripts = array(
+		'jquery' => 'jQuery',
+		'jquery-form' => 'jQuery Form',
+		'jquery-color' => 'jQuery Color',
+		'jquery-ui-core' => 'jQuery UI Core',
+		'jquery-ui-widget'=> 'jQuery UI Widget',
+		'jquery-ui-mouse'=> 'jQuery UI Mouse',
+		'jquery-ui-accordion'=> 'jQuery UI Accordion',
+		'jquery-ui-autocomplete'=> 'jQuery UI Autocomplete',
+		'jquery-ui-slider' => 'jQuery UI Slider',
+		'jquery-ui-tabs' => 'jQuery UI Tabs',
+		'jquery-ui-sortable' => 'jQuery UI Sortable',
+		'jquery-ui-draggable' => 'jQuery UI Draggable',
+		'jquery-ui-droppable' => 'jQuery UI Droppable',
+		'jquery-ui-selectable' => 'jQuery UI Selectable',
+		'jquery-ui-datepicker' => 'jQuery UI Datepicker',
+		'jquery-ui-resizable' => 'jQuery UI Resizable',
+		'jquery-ui-dialog' => 'jQuery UI Dialog',
+		'jquery-ui-button' => 'jQuery UI Button',
+		'schedule' => 'jQuery Schedule',
+		'suggest' => 'jQuery Suggest',
+		'jquery-hotkeys' => 'jQuery Hotkeys',
+	);
+
 	const POST_TYPE = 'customjs';
 	const PAGE_SLUG = 'custom-javascript';
 
@@ -28,6 +52,8 @@ class Custom_Javascript_Editor {
 		add_action( 'admin_init', array( $this, 'handle_form' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 
+		//add selected scripts to the frontend
+		add_action('wp_enqueue_scripts', array($this, 'enqueue_selected_scripts'));
 		// Show an updated message if things have been updated
 		if ( isset( $_REQUEST['page'], $_REQUEST['message'] ) && self::PAGE_SLUG == $_REQUEST['page'] && 'updated' == $_REQUEST['message'] )
 			add_action( 'admin_notices', array( $this, 'saved' ) );
@@ -69,6 +95,25 @@ class Custom_Javascript_Editor {
 			return get_object_vars( $post );
 		
 		return false;
+	}
+
+	function get_scripts_box(){
+		$cje_scripts = get_option('cje_scripts',array());
+		
+		foreach($this->js_scripts as $handle => $name){ ?>
+			<input type="checkbox" name="js_scripts[]" value="<?php echo $handle; ?>" 
+				<?php echo in_array($handle, $cje_scripts)? 'checked':'' ?>><?php echo $name; ?><br />
+			<?php
+		}
+	}
+
+	function enqueue_selected_scripts(){
+		$cje_scripts = get_option('cje_scripts');
+		if($cje_scripts){
+			foreach($cje_scripts as $handle){
+				wp_enqueue_script($handle);
+			}	
+		}
 	}
 
 	function get_current_revision() {
@@ -158,10 +203,20 @@ class Custom_Javascript_Editor {
 			<h2><?php esc_html_e( 'Custom Javascript Editor', 'custom-javascript-editor' ); ?></h2>
 			<form style="margin-top: 10px;" method="POST">
 				<?php wp_nonce_field( 'custom-javascript-editor', 'custom-javascript-editor' ) ?>
-				<textarea name="javascript" rows=20 style="width: 100%"><?php
-					if ( $this->get_js() )
-						echo esc_textarea( $this->js_decode_entities( $this->get_js() ) );
-				?></textarea>
+				<div style="width: 100%">
+					<div id="js_container" style="width: 80%; float: left;">
+						<textarea name="javascript" rows=20 style="width: 100%"><?php
+							if ( $this->get_js() )
+								echo esc_textarea( $this->js_decode_entities( $this->get_js() ) );
+						?></textarea>
+					</div>
+					<div id="frameworks_container" style="float: right; width: 20%; height: 350px;">
+						<div style="padding-left: 20px">
+							<h3 style="margin: 0;"><?php esc_html_e( 'Load also:', 'custom-javascript-editor' ); ?></h3><br /> 
+							<?php $this->get_scripts_box(); ?>
+						</div>
+					</div>
+				</div>
 				<?php submit_button( __( 'Update', 'custom-javascript-editor' ), 'button-primary alignright', 'update', false, array( 'accesskey' => 's' ) ); ?>
 			</form>
 			<div id="jslint_errors">
@@ -191,6 +246,13 @@ class Custom_Javascript_Editor {
 		$js = $_REQUEST['javascript'];
 		$js = wp_kses_post( $js );
 		$js = esc_html( $js );
+
+		//save selected wp scripts
+		if(isset($_REQUEST['js_scripts'])){
+			update_option('cje_scripts', $_REQUEST['js_scripts']);	
+		} else {
+			delete_option('cje_scripts');
+		}
 
 		//save
 		$saved = $this->save_revision( $js );

@@ -24,9 +24,9 @@ If you'd like to check out the code and contribute, [join us on GitHub](https://
 
 == Screenshots ==
 
-1. The back end editor
-2. The front end editor
-3. The front end editor
+1. An example of code in the editor
+2. Running our demo code on the site
+3. Running our demo code on the site
 
 == Changelog ==
 
