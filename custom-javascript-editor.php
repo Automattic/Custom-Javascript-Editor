@@ -197,7 +197,8 @@ class Custom_Javascript_Editor {
 						<?php $this->scripts_selector(); ?>
 					</div>
 				</div>
-				<?php submit_button( __( 'Update', 'custom-javascript-editor' ), 'button-primary alignright', 'update', false, array( 'accesskey' => 's' ) ); ?>
+				<div style="clear:both;"></div>
+				<?php submit_button( __( 'Update', 'custom-javascript-editor' ), 'primary', 'update', false, array( 'accesskey' => 's' ) ); ?>
 				</div>
 			</form>
 			<div id="jslint_errors">
