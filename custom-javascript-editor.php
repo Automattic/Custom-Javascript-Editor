@@ -12,9 +12,12 @@ class Custom_Javascript_Editor {
 
 	const POST_TYPE = 'customjs';
 	const PAGE_SLUG = 'custom-javascript';
+	const enqueue_option = 'cje_enqueue_scripts';
 
 	var $parent_slug = 'themes.php';
 	var $capability = 'edit_theme_options';
+
+	var $available_scripts = array();
 
 	function __construct() {
 
@@ -26,6 +29,7 @@ class Custom_Javascript_Editor {
 
 		add_action( 'admin_menu', array( $this, 'menu' ) );
 		add_action( 'admin_init', array( $this, 'handle_form' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'action_wp_enqueue_scripts' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 
 		// Show an updated message if things have been updated
@@ -37,6 +41,15 @@ class Custom_Javascript_Editor {
 	}
 
 	function action_init() {
+
+		$this->available_scripts = array(
+				array(
+						'name'           => __( 'jQuery', 'custom-javascript-editor' ),
+						'identifier'     => 'jquery',
+					),
+				// @todo include moar scripts here
+			);
+		$this->available_scripts = apply_filters( 'cje_available_scripts', $this->available_scripts );
 
 		$this->parent_slug = apply_filters( 'cje_parent_slug', $this->parent_slug );
 		$this->capability = apply_filters( 'cje_capability', $this->capability );
@@ -143,6 +156,19 @@ class Custom_Javascript_Editor {
 		}
 	}
 
+	/**
+	 * Enqueue any selected Javascript for the frontend
+	 */
+	function action_wp_enqueue_scripts() {
+		$enqueue_scripts = get_option( self::enqueue_option, array() );
+		foreach( $enqueue_scripts as $script_identifier ) {
+			$script = array_pop( wp_filter_object_list( $this->available_scripts, array( 'identifier' => $script_identifier ) ) );
+			// @todo Support for dependencies and specifying the path
+			if ( ! empty( $script ) )
+				wp_enqueue_script( $script );
+		}
+	}
+
 	function admin_scripts() {
 		if ( isset( $_REQUEST['page'] ) && self::POST_TYPE == $_REQUEST['page'] ) {
 			wp_enqueue_script( 'jslint', plugins_url( '/jslint/jslint.js', __FILE__ ) );
@@ -157,12 +183,22 @@ class Custom_Javascript_Editor {
 			<?php screen_icon(); ?>
 			<h2><?php esc_html_e( 'Custom Javascript Editor', 'custom-javascript-editor' ); ?></h2>
 			<form style="margin-top: 10px;" method="POST">
+				<div style="width: 100%">
 				<?php wp_nonce_field( 'custom-javascript-editor', 'custom-javascript-editor' ) ?>
+				<div id="cje-js-container" style="width: 80%; float: left;">
 				<textarea name="javascript" rows=20 style="width: 100%"><?php
 					if ( $this->get_js() )
 						echo esc_textarea( html_entity_decode( wp_kses_decode_entities( $this->get_js() ) ) );
 				?></textarea>
+				 </div>
+				<div id="cje-frameworks-container" style="float: right; width: 20%; height: 350px;">
+					<div style="padding-left: 20px">
+					<h3 style="margin: 0;"><?php esc_html_e( 'Load also:', 'custom-javascript-editor' ); ?></h3><br />
+						<?php $this->scripts_selector(); ?>
+					</div>
+				</div>
 				<?php submit_button( __( 'Update', 'custom-javascript-editor' ), 'button-primary alignright', 'update', false, array( 'accesskey' => 's' ) ); ?>
+				</div>
 			</form>
 			<div id="jslint_errors">
 				<h3><?php esc_html_e( 'Errors', 'custom-javascript-editor' ); ?></h3>
@@ -176,6 +212,22 @@ class Custom_Javascript_Editor {
 			</div>
 		</div>
 <?php }
+
+	/**
+	 * An interface for selecting from available frameworks to enqueue
+	 */
+	function scripts_selector() {
+		$enqueue_scripts = get_option( self::enqueue_option, array() );
+
+		foreach( $this->available_scripts as $script ) {
+			echo '<label for="' . esc_attr( 'script-' . $script['identifier'] ) . '">';
+			echo '<input id="' . esc_attr( 'script-' . $script['identifier'] ) . '" type="checkbox" name="enqueue_scripts[]"';
+			echo ' value="' . esc_attr( $script['identifier'] ) . '"';
+			if ( in_array( $script['identifier'], $enqueue_scripts ) )
+				echo ' checked="checked"';
+			echo ' />&nbsp;&nbsp;' . $script['name'] . '</label><br />';
+		}
+	}
 
 	function handle_form() {
 
@@ -194,6 +246,14 @@ class Custom_Javascript_Editor {
 
 		//save
 		$saved = $this->save_revision( $js );
+
+		// Save available scripts too
+		if ( ! empty( $_REQUEST['enqueue_scripts'] ) ) {
+			$enqueue_scripts = array_map( 'sanitize_key', (array)$_REQUEST['enqueue_scripts'] );
+			update_option( self::enqueue_option, $enqueue_scripts );
+		} else {
+			delete_option( self::enqueue_option );
+		}
 
 		$query_args = array(
 				'page'       => self::PAGE_SLUG,
