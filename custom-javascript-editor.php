@@ -138,7 +138,6 @@ class Custom_Javascript_Editor {
 
 	function print_scripts() {
 		if ( ! is_admin() && strlen( $this->get_js() ) > 0 ) { ?>
-
 				<script><?php echo html_entity_decode( wp_kses_decode_entities( $this->get_js() ) ); ?></script>
 <?php
 		}
@@ -204,6 +203,7 @@ class Custom_Javascript_Editor {
 		wp_safe_redirect( $admin_page );
 		exit;
 	}
+
 }
 
 new Custom_Javascript_Editor();
