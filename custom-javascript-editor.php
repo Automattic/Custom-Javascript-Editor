@@ -56,6 +56,14 @@ class Custom_Javascript_Editor {
 						'identifier'     => 'jquery-color',
 					),
 				array(
+						'name'           => __( 'jQuery Colorbox', 'custom-javascript-editor' ),
+						'identifier'     => 'jquery-colorbox',
+						'source'         => plugins_url( 'libraries/jquery.colorbox-min.js', __FILE__ ),
+						'dependencies'   => array(
+								'jquery',
+							),
+					),
+				array(
 						'name'           => __( 'jQuery UI Core', 'custom-javascript-editor' ),
 						'identifier'     => 'jquery-ui-core',
 					),
@@ -228,8 +236,14 @@ class Custom_Javascript_Editor {
 		foreach( $enqueue_scripts as $script_identifier ) {
 			$script = array_pop( wp_filter_object_list( $this->available_scripts, array( 'identifier' => $script_identifier ) ) );
 			// @todo Support for dependencies and specifying the path
-			if ( ! empty( $script ) )
-				wp_enqueue_script( $script );
+			if ( ! empty( $script ) ) {
+				$source = ( ! empty( $script['source'] ) ) ? $script['source'] : null;
+				$dependencies = ( ! empty( $script['dependencies'] ) ) ? $script['dependencies'] : null;
+				if ( $source )
+					wp_enqueue_script( $script, $source, $dependencies );
+				else 
+					wp_enqueue_script( $script );
+			}
 		}
 	}
 
