@@ -42,6 +42,8 @@ class Custom_Javascript_Editor {
 
 	function action_init() {
 
+		load_plugin_textdomain( 'custom-javascript-editor', false, plugin_basename( dirname( __FILE__ ) ) . '/languages/' );
+
 		$this->available_scripts = array(
 				array(
 						'name'           => __( 'jQuery', 'custom-javascript-editor' ),
