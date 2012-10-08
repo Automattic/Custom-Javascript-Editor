@@ -2,7 +2,7 @@
 Plugin Name:  Custom Javascript Editor
 Plugin URI:   http://wordpress.org/extend/plugins/custom-javascript-editor/
 Description:  Add custom Javascript to your site from an editor in the WordPress admin
-Version:      1.0-working
+Version:      1.0
 Author:       Automattic
 Author URI:   http://automattic.com
 License:      GPLv2 or later

@@ -3,7 +3,7 @@ Contributors: automattic, betzster, danielbachhuber
 Tags: javascript
 Requires at least: 3.4
 Tested up to: 3.4.2
-Stable tag: 0.9.1
+Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,6 +27,11 @@ If you'd like to check out the code and contribute, [join us on GitHub](https://
 1. The back end editor
 2. The front end editor
 3. The front end editor
+
+== Upgrade Notice ==
+
+= 1.0 =
+Enqueue any bundled Javascript libraries on the frontend for use. Register your own with the 'cje_available_scripts' filter.
 
 == Changelog ==
 
