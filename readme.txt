@@ -31,7 +31,7 @@ If you'd like to check out the code and contribute, [join us on GitHub](https://
 == Changelog ==
 
 = 1.0 (Oct. 8, 2012) =
-* Enqueue any bundled Javascript libraries on the frontend for use. Thanks [flentini](https://github.com/flentini) for the original pull request
+* Enqueue any bundled Javascript libraries on the frontend for use. Register your own with the 'cje_available_scripts' filter. Thanks [flentini](https://github.com/flentini) for the original pull request
 
 = 0.9.1 =
 * Bug fix: Use html_entity_decode() for decoding stored Javascript so it properly renders
