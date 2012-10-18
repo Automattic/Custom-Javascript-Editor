@@ -330,7 +330,8 @@ class Custom_Javascript_Editor {
 
 		//process
 		$js = $_REQUEST['javascript'];
-		$js = wp_kses_post( $js );
+		// The $js variable is explicitly not sanitized, as we allow Javascript
+		// and other HTML elements could be constructed piece by piece even if we filtered them
 		$js = esc_html( $js );
 
 		//save
