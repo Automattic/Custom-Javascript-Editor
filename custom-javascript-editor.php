@@ -66,6 +66,14 @@ class Custom_Javascript_Editor {
 							),
 					),
 				array(
+						'name'           => __( 'jQuery Masonry', 'custom-javascript-editor' ),
+						'identifier'     => 'jquery-masonry',
+						'source'         => plugins_url( 'libraries/jquery.masonry.min.js', __FILE__ ),
+						'dependencies'   => array(
+								'jquery',
+							),
+					),
+				array(
 						'name'           => __( 'jQuery UI Core', 'custom-javascript-editor' ),
 						'identifier'     => 'jquery-ui-core',
 					),

@@ -35,6 +35,9 @@ Enqueue any bundled Javascript libraries on the frontend for use. Register your 
 
 == Changelog ==
 
+= 1.1 (??? ?, 2012) =
+* jQuery Masonry is available as a library to use
+
 = 1.0 (Oct. 8, 2012) =
 * Enqueue any bundled Javascript libraries on the frontend for use. Register your own with the 'cje_available_scripts' filter. Thanks [flentini](https://github.com/flentini) for the original pull request
 
