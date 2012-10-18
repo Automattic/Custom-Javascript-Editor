@@ -30,7 +30,7 @@ class Custom_Javascript_Editor {
 		add_action( 'admin_menu', array( $this, 'menu' ) );
 		add_action( 'admin_init', array( $this, 'handle_form' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'action_wp_enqueue_scripts' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts_and_styles' ) );
 
 		// Show an updated message if things have been updated
 		if ( isset( $_REQUEST['page'], $_REQUEST['message'] ) && self::PAGE_SLUG == $_REQUEST['page'] && 'updated' == $_REQUEST['message'] )
@@ -257,8 +257,13 @@ class Custom_Javascript_Editor {
 		}
 	}
 
-	function admin_scripts() {
-		if ( isset( $_REQUEST['page'] ) && self::POST_TYPE == $_REQUEST['page'] ) {
+	function admin_scripts_and_styles() {
+		if ( isset( $_REQUEST['page'] ) && self::PAGE_SLUG == $_REQUEST['page'] ) {
+			wp_enqueue_script( 'cje-code-mirror-js', plugins_url( '/codemirror/codemirror.js', __FILE__ ) );
+			wp_enqueue_script( 'cje-code-mirror-js-support-js', plugins_url( '/codemirror/javascript.js', __FILE__ ) );
+			wp_enqueue_style( 'cje-code-mirror-css', plugins_url( '/codemirror/codemirror.css', __FILE__ ) );
+			wp_enqueue_style( 'cje-code-mirror-theme-css', plugins_url( '/codemirror/cobalt.css', __FILE__ ) );
+
 			wp_enqueue_script( 'jslint', plugins_url( '/jslint/jslint.js', __FILE__ ) );
 			wp_enqueue_script( 'initui', plugins_url( '/jslint/initui.js', __FILE__ ), array( 'jquery', 'jslint' ) );
 		}
@@ -274,10 +279,19 @@ class Custom_Javascript_Editor {
 				<div style="width: 100%">
 				<?php wp_nonce_field( 'custom-javascript-editor', 'custom-javascript-editor' ) ?>
 				<div id="cje-js-container" style="width: 80%; float: left;">
-				<textarea name="javascript" rows=20 style="width: 100%"><?php
+				<textarea id="cje-javascript" name="javascript" rows=20 style="width: 100%"><?php
 					if ( $this->get_js() )
 						echo esc_textarea( html_entity_decode( wp_kses_decode_entities( $this->get_js() ) ) );
 				?></textarea>
+				<script>
+					var CJECodeMirrorOptions = {
+						theme:        'cobalt',
+						indentUnit:   4,
+						lineWrapping: true,
+						lineNumbers:  true,
+					}
+					var CJECodeMirror = CodeMirror.fromTextArea(document.getElementById('cje-javascript'), CJECodeMirrorOptions);
+				</script>
 				 </div>
 				<div id="cje-frameworks-container" style="float: right; width: 20%; height: 350px;">
 					<div style="padding-left: 20px">
