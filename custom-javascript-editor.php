@@ -68,10 +68,6 @@ class Custom_Javascript_Editor {
 				array(
 						'name'           => __( 'jQuery Masonry', 'custom-javascript-editor' ),
 						'identifier'     => 'jquery-masonry',
-						'source'         => plugins_url( 'libraries/jquery.masonry.min.js', __FILE__ ),
-						'dependencies'   => array(
-								'jquery',
-							),
 					),
 				array(
 						'name'           => __( 'jQuery UI Core', 'custom-javascript-editor' ),
@@ -250,7 +246,7 @@ class Custom_Javascript_Editor {
 				$source = ( ! empty( $script['source'] ) ) ? $script['source'] : null;
 				$dependencies = ( ! empty( $script['dependencies'] ) ) ? $script['dependencies'] : null;
 				if ( $source )
-					wp_enqueue_script( $script, $source, $dependencies );
+					wp_enqueue_script( $script['identifier'], $source, $dependencies );
 				else 
 					wp_enqueue_script( $script );
 			}
