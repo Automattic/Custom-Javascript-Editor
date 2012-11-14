@@ -1,7 +1,7 @@
 <?php /*
-Plugin Name:  Custom Javascript Editor
+Plugin Name:  Custom JavaScript Editor
 Plugin URI:   http://wordpress.org/extend/plugins/custom-javascript-editor/
-Description:  Add custom Javascript to your site from an editor in the WordPress admin
+Description:  Add custom JavaScript to your site from an editor in the WordPress admin
 Version:      1.1-working
 Author:       Automattic
 Author URI:   http://automattic.com
@@ -224,11 +224,11 @@ class Custom_Javascript_Editor {
 	}
 
 	function menu() {
-		add_submenu_page( $this->parent_slug, __( 'Custom Javascript Editor', 'custom-javascript-editor' ), __( 'Custom Javascript', 'custom-javascript-editor' ), $this->capability, self::PAGE_SLUG, array( $this, 'javascript_editor' ) );
+		add_submenu_page( $this->parent_slug, __( 'Custom JavaScript Editor', 'custom-javascript-editor' ), __( 'Custom JavaScript', 'custom-javascript-editor' ), $this->capability, self::PAGE_SLUG, array( $this, 'javascript_editor' ) );
 	}
 
 	function saved() {
-		echo '<div id="message" class="updated fade"><p><strong>' . __('Javascript saved.', 'custom-javascript-editor' ) . '</strong></p></div>';
+		echo '<div id="message" class="updated fade"><p><strong>' . __('JavaScript saved.', 'custom-javascript-editor' ) . '</strong></p></div>';
 	}
 
 	function print_scripts() {
@@ -239,7 +239,7 @@ class Custom_Javascript_Editor {
 	}
 
 	/**
-	 * Enqueue any selected Javascript for the frontend
+	 * Enqueue any selected JavaScript for the frontend
 	 */
 	function action_wp_enqueue_scripts() {
 		$enqueue_scripts = get_option( self::enqueue_option, array() );
@@ -274,7 +274,7 @@ class Custom_Javascript_Editor {
 		?>
 		<div class="wrap">
 			<?php screen_icon(); ?>
-			<h2><?php esc_html_e( 'Custom Javascript Editor', 'custom-javascript-editor' ); ?></h2>
+			<h2><?php esc_html_e( 'Custom JavaScript Editor', 'custom-javascript-editor' ); ?></h2>
 			<form style="margin-top: 10px;" method="POST">
 				<div style="width: 100%">
 				<?php wp_nonce_field( 'custom-javascript-editor', 'custom-javascript-editor' ) ?>
@@ -309,7 +309,7 @@ class Custom_Javascript_Editor {
 			</div>
 			<div id="poststuff" style="clear:both;" class="metabox-holder<?php echo 2 == $screen_layout_columns ? ' has-right-sidebar' : ''; ?>">
 			<?php
-				add_meta_box( 'revisionsdiv', __( 'Javascript Revisions', 'custom-javascript-editor' ), array( $this, 'revisions_meta_box' ), 'custom-javascript', 'normal' );
+				add_meta_box( 'revisionsdiv', __( 'JavaScript Revisions', 'custom-javascript-editor' ), array( $this, 'revisions_meta_box' ), 'custom-javascript', 'normal' );
 				do_meta_boxes( 'custom-javascript', 'normal', $this->get_js_post() );
 			?>
 			</div>
@@ -370,4 +370,4 @@ class Custom_Javascript_Editor {
 
 }
 
-new Custom_Javascript_Editor();
+new Custom_JavaScript_Editor();
