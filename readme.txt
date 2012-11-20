@@ -30,12 +30,16 @@ If you'd like to check out the code and contribute, [join us on GitHub](https://
 
 == Upgrade Notice ==
 
+= 1.1 =
+* The editor has a syntax highlighter with configurable themes. jQuery Masonry is also bundled
+
 = 1.0 =
 Enqueue any bundled JavaScript libraries on the frontend for use. Register your own with the 'cje_available_scripts' filter.
 
 == Changelog ==
 
-= 1.1 (??? ?, 2012) =
+= 1.1 (Nov. 19, 2012) =
+* The editor has a syntax highlighter with configurable themes.
 * jQuery Masonry is available as a library to use
 * Bug fix: Stop stripping arbitrary HTML markup
 
