@@ -3,7 +3,7 @@ Contributors: automattic, betzster, danielbachhuber
 Tags: javascript
 Requires at least: 3.4
 Tested up to: 3.4.2
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,7 +31,7 @@ If you'd like to check out the code and contribute, [join us on GitHub](https://
 == Upgrade Notice ==
 
 = 1.1 =
-* The editor has a syntax highlighter with configurable themes. jQuery Masonry is also bundled
+* The editor has a syntax highlighter with configurable themes. jQuery Masonry is also bundled.
 
 = 1.0 =
 Enqueue any bundled JavaScript libraries on the frontend for use. Register your own with the 'cje_available_scripts' filter.
