@@ -1,10 +1,10 @@
-# Copyright (C) 2012 Custom Javascript Editor
-# This file is distributed under the same license as the Custom Javascript Editor package.
+# Copyright (C) 2012 Custom JavaScript Editor
+# This file is distributed under the same license as the Custom JavaScript Editor package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Custom Javascript Editor 1.0-working\n"
+"Project-Id-Version: Custom JavaScript Editor 1.1-working\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/custom-javascript-editor\n"
-"POT-Creation-Date: 2012-10-08 22:09:36+00:00\n"
+"POT-Creation-Date: 2012-11-20 04:44:51+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,109 +12,121 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: custom-javascript-editor.php:47
+#: custom-javascript-editor.php:67
 msgid "jQuery"
 msgstr ""
 
-#: custom-javascript-editor.php:51
+#: custom-javascript-editor.php:71
 msgid "jQuery Form"
 msgstr ""
 
-#: custom-javascript-editor.php:55
+#: custom-javascript-editor.php:75
 msgid "jQuery Color"
 msgstr ""
 
-#: custom-javascript-editor.php:59
+#: custom-javascript-editor.php:79
 msgid "jQuery Colorbox"
 msgstr ""
 
-#: custom-javascript-editor.php:67
-msgid "jQuery UI Core"
-msgstr ""
-
-#: custom-javascript-editor.php:71
-msgid "jQuery UI Accordion"
-msgstr ""
-
-#: custom-javascript-editor.php:75
-msgid "jQuery UI Autocomplete"
-msgstr ""
-
-#: custom-javascript-editor.php:79
-msgid "jQuery UI Slider"
-msgstr ""
-
-#: custom-javascript-editor.php:83
-msgid "jQuery UI Tabs"
-msgstr ""
-
 #: custom-javascript-editor.php:87
-msgid "jQuery UI Sortable"
-msgstr ""
-
-#: custom-javascript-editor.php:91
-msgid "jQuery UI Draggable"
+msgid "jQuery Masonry"
 msgstr ""
 
 #: custom-javascript-editor.php:95
-msgid "jQuery UI Droppable"
+msgid "jQuery UI Core"
 msgstr ""
 
 #: custom-javascript-editor.php:99
-msgid "jQuery UI Selectable"
+msgid "jQuery UI Accordion"
 msgstr ""
 
 #: custom-javascript-editor.php:103
-msgid "jQuery UI Datepicker"
+msgid "jQuery UI Autocomplete"
 msgstr ""
 
 #: custom-javascript-editor.php:107
-msgid "jQuery UI Resizable"
+msgid "jQuery UI Slider"
 msgstr ""
 
 #: custom-javascript-editor.php:111
-msgid "jQuery UI Dialog"
+msgid "jQuery UI Tabs"
 msgstr ""
 
 #: custom-javascript-editor.php:115
-msgid "jQuery UI Button"
+msgid "jQuery UI Sortable"
 msgstr ""
 
 #: custom-javascript-editor.php:119
+msgid "jQuery UI Draggable"
+msgstr ""
+
+#: custom-javascript-editor.php:123
+msgid "jQuery UI Droppable"
+msgstr ""
+
+#: custom-javascript-editor.php:127
+msgid "jQuery UI Selectable"
+msgstr ""
+
+#: custom-javascript-editor.php:131
+msgid "jQuery UI Datepicker"
+msgstr ""
+
+#: custom-javascript-editor.php:135
+msgid "jQuery UI Resizable"
+msgstr ""
+
+#: custom-javascript-editor.php:139
+msgid "jQuery UI Dialog"
+msgstr ""
+
+#: custom-javascript-editor.php:143
+msgid "jQuery UI Button"
+msgstr ""
+
+#: custom-javascript-editor.php:147
 msgid "jQuery Schedule"
 msgstr ""
 
-#. #-#-#-#-#  plugin.pot (Custom Javascript Editor 1.0-working)  #-#-#-#-#
+#. #-#-#-#-#  plugin.pot (Custom JavaScript Editor 1.1-working)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
-#: custom-javascript-editor.php:217 custom-javascript-editor.php:262
-msgid "Custom Javascript Editor"
+#: custom-javascript-editor.php:245 custom-javascript-editor.php:323
+msgid "Custom JavaScript Editor"
 msgstr ""
 
-#: custom-javascript-editor.php:217
-msgid "Custom Javascript"
+#: custom-javascript-editor.php:245
+msgid "Custom JavaScript"
 msgstr ""
 
-#: custom-javascript-editor.php:221
-msgid "Javascript saved."
+#: custom-javascript-editor.php:261
+msgid "Editor Style"
 msgstr ""
 
-#: custom-javascript-editor.php:274
+#: custom-javascript-editor.php:269
+msgid "Apply"
+msgstr ""
+
+#: custom-javascript-editor.php:276
+msgid "JavaScript saved."
+msgstr ""
+
+#: custom-javascript-editor.php:344
 msgid "Load also:"
 msgstr ""
 
-#: custom-javascript-editor.php:279
+#: custom-javascript-editor.php:349
 msgid "Update"
 msgstr ""
 
-#: custom-javascript-editor.php:283
+#: custom-javascript-editor.php:353
 msgid "Errors"
 msgstr ""
 
-#: custom-javascript-editor.php:288
-msgid "Javascript Revisions"
+#: custom-javascript-editor.php:358
+msgid "JavaScript Revisions"
 msgstr ""
 
-#: custom-javascript-editor.php:319
+#: custom-javascript-editor.php:387
 msgid "Whoops, you don't have permission to do that."
 msgstr ""
 
@@ -124,7 +136,7 @@ msgstr ""
 
 #. Description of the plugin/theme
 msgid ""
-"Add custom Javascript to your site from an editor in the WordPress admin"
+"Add custom JavaScript to your site from an editor in the WordPress admin"
 msgstr ""
 
 #. Author of the plugin/theme
