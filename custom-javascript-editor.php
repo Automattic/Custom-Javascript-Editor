@@ -17,6 +17,24 @@ class Custom_Javascript_Editor {
 	var $parent_slug = 'themes.php';
 	var $capability = 'edit_theme_options';
 
+	var $default_editor_style = 'cobalt';
+	var $editor_styles = array(
+			'ambiance',
+			'blackboard',
+			'cobalt',
+			'eclipse',
+			'elegant',
+			'erlang-dark',
+			'lesser-dark',
+			'monokai',
+			'neat',
+			'night',
+			'rubyblue',
+			'vibrant-ink',
+			'xq-dark',
+		);
+	var $editor_style_option = 'cje_editor_style';
+
 	var $available_scripts = array();
 
 	function __construct() {
@@ -224,7 +242,34 @@ class Custom_Javascript_Editor {
 	}
 
 	function menu() {
-		add_submenu_page( $this->parent_slug, __( 'Custom JavaScript Editor', 'custom-javascript-editor' ), __( 'Custom JavaScript', 'custom-javascript-editor' ), $this->capability, self::PAGE_SLUG, array( $this, 'javascript_editor' ) );
+		$hook = add_submenu_page( $this->parent_slug, __( 'Custom JavaScript Editor', 'custom-javascript-editor' ), __( 'Custom JavaScript', 'custom-javascript-editor' ), $this->capability, self::PAGE_SLUG, array( $this, 'javascript_editor' ) );
+		add_action( 'load-' . $hook, array( $this, 'add_screen_options' ) );
+	}
+
+	function add_screen_options() {
+
+		// Add the markup to the DOM
+		add_filter( 'screen_settings', array( $this, 'filter_screen_settings' ) );
+
+		// Get the custom style for the user if there is one
+		$custom_style = get_user_meta( get_current_user_id(), $this->editor_style_option, true );
+		$this->selected_editor_style = ( $custom_style ) ? $custom_style : $this->default_editor_style;
+	}
+
+	function filter_screen_settings( $output ) {
+
+		$output .= '<h5>' . __( 'Editor Style', 'custom-javascript-editor' ) . '</h5>' . PHP_EOL;
+
+		$output .= '<div class="metabox-prefs">';
+		$output .= '<select name="cje-editor-style">';
+		foreach( $this->editor_styles as $slug ) {
+			$output .= '<option ' . selected( $this->selected_editor_style, $slug, false ) . 'value="' . esc_attr( $slug ) . '">' . ucwords( str_replace( '-', ' ', $slug ) ) . '</option>';
+		}
+		$output .= '</select>';
+		$output .= '&nbsp;&nbsp;' . get_submit_button( __( 'Apply', 'custom-javascript-editor' ), 'button', 'screen-options-apply', false );
+		$output .= '</div>';
+
+		return $output;
 	}
 
 	function saved() {
@@ -262,7 +307,8 @@ class Custom_Javascript_Editor {
 			wp_enqueue_script( 'cje-code-mirror-js', plugins_url( '/codemirror/codemirror.js', __FILE__ ) );
 			wp_enqueue_script( 'cje-code-mirror-js-support-js', plugins_url( '/codemirror/javascript.js', __FILE__ ) );
 			wp_enqueue_style( 'cje-code-mirror-css', plugins_url( '/codemirror/codemirror.css', __FILE__ ) );
-			wp_enqueue_style( 'cje-code-mirror-theme-css', plugins_url( '/codemirror/cobalt.css', __FILE__ ) );
+			$theme_css = "/codemirror/{$this->selected_editor_style}.css";
+			wp_enqueue_style( 'cje-code-mirror-theme-css', plugins_url( $theme_css, __FILE__ ) );
 
 			wp_enqueue_script( 'jslint', plugins_url( '/jslint/jslint.js', __FILE__ ) );
 			wp_enqueue_script( 'initui', plugins_url( '/jslint/initui.js', __FILE__ ), array( 'jquery', 'jslint' ) );
@@ -285,7 +331,7 @@ class Custom_Javascript_Editor {
 				?></textarea>
 				<script>
 					var CJECodeMirrorOptions = {
-						theme:        'cobalt',
+						theme:        '<?php echo esc_js( $this->selected_editor_style ); ?>',
 						indentUnit:   4,
 						lineWrapping: true,
 						lineNumbers:  true,
@@ -334,13 +380,27 @@ class Custom_Javascript_Editor {
 
 	function handle_form() {
 
-		if ( !isset( $_REQUEST['javascript'] ) || !isset( $_REQUEST['page'] ) || self::PAGE_SLUG != $_REQUEST['page'] )
+		if ( !isset( $_REQUEST['page'] ) || self::PAGE_SLUG != $_REQUEST['page'] )
+			return;
+
+		if ( ! current_user_can( $this->capability ) )
+			wp_die( __( "Whoops, you don't have permission to do that.", 'custom-javascript-editor' ) );
+
+		// A request to change the JS editor style
+		if ( ! empty( $_REQUEST['screen-options-apply'] ) ) {
+			check_admin_referer( 'screen-options-nonce', 'screenoptionnonce' );
+
+			update_user_meta( get_current_user_id(), $this->editor_style_option, sanitize_key( $_REQUEST['cje-editor-style'] ) );
+
+			wp_safe_redirect( add_query_arg( 'page', self::PAGE_SLUG, admin_url( 'themes.php' ) ) );
+			exit;
+		}
+
+		// We aren't saving....
+		if ( ! isset( $_REQUEST['javascript'] ) )
 			return;
 
 		check_admin_referer( 'custom-javascript-editor', 'custom-javascript-editor' );
-
-		if ( !current_user_can( $this->capability ) )
-			wp_die( __( "Whoops, you don't have permission to do that.", 'custom-javascript-editor' ) );
 
 		//process
 		$js = $_REQUEST['javascript'];
