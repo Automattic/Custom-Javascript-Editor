@@ -356,7 +356,11 @@ class Custom_Javascript_Editor {
 			<div id="poststuff" style="clear:both;" class="metabox-holder<?php echo 2 == $screen_layout_columns ? ' has-right-sidebar' : ''; ?>">
 			<?php
 				add_meta_box( 'revisionsdiv', __( 'JavaScript Revisions', 'custom-javascript-editor' ), array( $this, 'revisions_meta_box' ), 'custom-javascript', 'normal' );
-				do_meta_boxes( 'custom-javascript', 'normal', $this->get_js_post() );
+
+				do_action( 'add_meta_boxes', self::POST_TYPE, $this->get_js_post() );
+				do_action( 'add_meta_boxes_' . self::POST_TYPE, $this->get_js_post() );
+
+				do_meta_boxes( self::POST_TYPE, 'normal', $this->get_js_post() );
 			?>
 			</div>
 		</div>
