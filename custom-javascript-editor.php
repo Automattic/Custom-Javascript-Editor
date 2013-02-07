@@ -56,6 +56,8 @@ class Custom_Javascript_Editor {
 
 		// Print scripts on the front end
 		add_action( 'wp_print_footer_scripts', array( $this, 'print_scripts' ), 100 );
+
+		add_action( 'init', array( $this, 'cje_api' ) );
 	}
 
 	function action_init() {
@@ -180,7 +182,7 @@ class Custom_Javascript_Editor {
 
 		if ( $post = array_shift( get_posts( $args ) ) )
 			return get_object_vars( $post );
-		
+
 		return false;
 	}
 
@@ -296,7 +298,7 @@ class Custom_Javascript_Editor {
 				$dependencies = ( ! empty( $script['dependencies'] ) ) ? $script['dependencies'] : null;
 				if ( $source )
 					wp_enqueue_script( $script['identifier'], $source, $dependencies );
-				else 
+				else
 					wp_enqueue_script( $script );
 			}
 		}
@@ -355,8 +357,12 @@ class Custom_Javascript_Editor {
 			</div>
 			<div id="poststuff" style="clear:both;" class="metabox-holder<?php echo 2 == $screen_layout_columns ? ' has-right-sidebar' : ''; ?>">
 			<?php
-				add_meta_box( 'revisionsdiv', __( 'JavaScript Revisions', 'custom-javascript-editor' ), array( $this, 'revisions_meta_box' ), 'custom-javascript', 'normal' );
-				do_meta_boxes( 'custom-javascript', 'normal', $this->get_js_post() );
+				add_meta_box( 'revisionsdiv', __( 'JavaScript Revisions', 'custom-javascript-editor' ), array( $this, 'revisions_meta_box' ), self::POST_TYPE, 'normal' );
+
+				do_action( 'add_meta_boxes', self::POST_TYPE, $this->get_js_post() );
+				do_action( 'add_meta_boxes_' . self::POST_TYPE, $this->get_js_post() );
+
+				do_meta_boxes( self::POST_TYPE, 'normal', $this->get_js_post() );
 			?>
 			</div>
 		</div>
@@ -426,6 +432,14 @@ class Custom_Javascript_Editor {
 		$admin_page = add_query_arg( $query_args, admin_url( $this->parent_slug ) );
 		wp_safe_redirect( $admin_page );
 		exit;
+	}
+
+	function cje_api() {
+		if ( ! class_exists( 'CJE_API_Server' ) )
+			require dirname(__FILE__) . '/cje-api/cje-api-server.php';
+
+		if ( ! class_exists( 'CJE_API_Client' ) )
+			require dirname(__FILE__) . '/cje-api/cje-api-client.php';
 	}
 
 }
