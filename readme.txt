@@ -3,7 +3,7 @@ Contributors: automattic, betzster, danielbachhuber
 Tags: javascript
 Requires at least: 3.4
 Tested up to: 3.5.1
-Stable tag: 1.1
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,6 +29,9 @@ If you'd like to check out the code and contribute, [join us on GitHub](https://
 3. The front end editor
 
 == Upgrade Notice ==
+
+= 1.2 =
+* Don't output custom javascript on the login page, thanks Carl Danley.
 
 = 1.1 =
 * The editor has a syntax highlighter with configurable themes. jQuery Masonry is also bundled.
