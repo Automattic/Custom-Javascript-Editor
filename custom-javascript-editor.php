@@ -2,7 +2,7 @@
 Plugin Name:  Custom JavaScript Editor
 Plugin URI:   http://wordpress.org/extend/plugins/custom-javascript-editor/
 Description:  Add custom JavaScript to your site from an editor in the WordPress admin
-Version:      1.2-alpha
+Version:      1.1
 Author:       Automattic
 Author URI:   http://automattic.com
 License:      GPLv2 or later
@@ -277,10 +277,16 @@ class Custom_Javascript_Editor {
 	}
 
 	function print_scripts() {
-		if ( ! is_admin() && strlen( $this->get_js() ) > 0 ) { ?>
-				<script><?php echo html_entity_decode( wp_kses_decode_entities( $this->get_js() ) ); ?></script>
-<?php
-		}
+		global $pagenow;
+
+		if ( is_admin() || 'wp-login.php' == $pagenow )
+			return;
+
+		if ( strlen( $this->get_js() ) > 0 ) : ?>
+			<!-- Custom JavaScript Editor -->
+			<script><?php echo html_entity_decode( wp_kses_decode_entities( $this->get_js() ) ); ?></script>
+		<?php
+		endif;
 	}
 
 	/**
@@ -356,7 +362,6 @@ class Custom_Javascript_Editor {
 			<div id="poststuff" style="clear:both;" class="metabox-holder<?php echo 2 == $screen_layout_columns ? ' has-right-sidebar' : ''; ?>">
 			<?php
 				add_meta_box( 'revisionsdiv', __( 'JavaScript Revisions', 'custom-javascript-editor' ), array( $this, 'revisions_meta_box' ), 'custom-javascript', 'normal' );
-
 				do_action( 'add_meta_boxes', self::POST_TYPE, $this->get_js_post() );
 				do_action( 'add_meta_boxes_' . self::POST_TYPE, $this->get_js_post() );
 
