@@ -3,7 +3,7 @@ jQuery(document).ready(function($) {
 	    $errors = $errorsdiv.find('.errors'),
 
 	    // Run the linter
-	    input = $('textarea').val(),
+	    input = $('#cje-javascript').val(),
 	    options = {'predef': ['jQuery']},
 	    result = JSLINT(input, options),
 
