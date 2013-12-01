@@ -195,8 +195,7 @@ class Custom_Javascript_Editor {
 		if ( empty( $revisions ) )
 			return $js;
 
-		$revision = array_shift( $revisions );
-		return get_object_vars( $revision );
+		return get_object_vars( array_shift( $revisions ) );
 	}
 
 	function save_revision( $js, $is_preview = false ) {
