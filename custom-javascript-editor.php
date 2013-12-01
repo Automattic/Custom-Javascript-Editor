@@ -178,7 +178,8 @@ class Custom_Javascript_Editor {
 			'post_status' => 'publish',
 		);
 
-		if ( $post = array_shift( get_posts( $args ) ) )
+		$posts = get_posts( $args );
+		if ( $post = array_shift( $posts ) )
 			return get_object_vars( $post );
 		
 		return false;
@@ -294,8 +295,9 @@ class Custom_Javascript_Editor {
 	 */
 	function action_wp_enqueue_scripts() {
 		$enqueue_scripts = get_option( self::enqueue_option, array() );
-		foreach( $enqueue_scripts as $script_identifier ) {
-			$script = array_pop( wp_filter_object_list( $this->available_scripts, array( 'identifier' => $script_identifier ) ) );
+		foreach ( $enqueue_scripts as $script_identifier ) {
+			$matching_scripts = wp_filter_object_list( $this->available_scripts, array( 'identifier' => $script_identifier ) );
+			$script = array_pop( $matching_scripts );
 			// @todo Support for dependencies and specifying the path
 			if ( ! empty( $script ) ) {
 				$source = ( ! empty( $script['source'] ) ) ? $script['source'] : null;
