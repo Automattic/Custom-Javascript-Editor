@@ -2,7 +2,7 @@
 Plugin Name:  Custom JavaScript Editor [Forked]
 Plugin URI:   https://github.com/washingtonstateuniversity/Custom-Javascript-Editor
 Description:  Add custom JavaScript to your site from an editor in the WordPress admin
-Version:      1.2
+Version:      2.0.0
 Author:       Automattic, Washington State University
 License:      GPLv2 or later
 */
