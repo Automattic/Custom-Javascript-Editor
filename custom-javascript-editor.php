@@ -1,10 +1,9 @@
 <?php /*
-Plugin Name:  Custom JavaScript Editor
-Plugin URI:   http://wordpress.org/extend/plugins/custom-javascript-editor/
+Plugin Name:  Custom JavaScript Editor [Forked]
+Plugin URI:   https://github.com/washingtonstateuniversity/Custom-Javascript-Editor
 Description:  Add custom JavaScript to your site from an editor in the WordPress admin
 Version:      1.2
-Author:       Automattic
-Author URI:   http://automattic.com
+Author:       Automattic, Washington State University
 License:      GPLv2 or later
 */
 
@@ -64,10 +63,6 @@ class Custom_Javascript_Editor {
 
 		$this->available_scripts = array(
 				array(
-						'name'           => __( 'jQuery', 'custom-javascript-editor' ),
-						'identifier'     => 'jquery',
-					),
-				array(
 						'name'           => __( 'jQuery Form', 'custom-javascript-editor' ),
 						'identifier'     => 'jquery-form',
 					),
@@ -90,58 +85,6 @@ class Custom_Javascript_Editor {
 						'dependencies'   => array(
 							'jquery',
 						),
-					),
-				array(
-						'name'           => __( 'jQuery UI Core', 'custom-javascript-editor' ),
-						'identifier'     => 'jquery-ui-core',
-					),
-				array(
-						'name'           => __( 'jQuery UI Accordion', 'custom-javascript-editor' ),
-						'identifier'     => 'jquery-ui-accordion',
-					),
-				array(
-						'name'           => __( 'jQuery UI Autocomplete', 'custom-javascript-editor' ),
-						'identifier'     => 'jquery-ui-autocomplete',
-					),
-				array(
-						'name'           => __( 'jQuery UI Slider', 'custom-javascript-editor' ),
-						'identifier'     => 'jquery-ui-slider',
-					),
-				array(
-						'name'           => __( 'jQuery UI Tabs', 'custom-javascript-editor' ),
-						'identifier'     => 'jquery-ui-tabs',
-					),
-				array(
-						'name'           => __( 'jQuery UI Sortable', 'custom-javascript-editor' ),
-						'identifier'     => 'jquery-ui-sortable',
-					),
-				array(
-						'name'           => __( 'jQuery UI Draggable', 'custom-javascript-editor' ),
-						'identifier'     => 'jquery-ui-draggable',
-					),
-				array(
-						'name'           => __( 'jQuery UI Droppable', 'custom-javascript-editor' ),
-						'identifier'     => 'jquery-ui-droppable',
-					),
-				array(
-						'name'           => __( 'jQuery UI Selectable', 'custom-javascript-editor' ),
-						'identifier'     => 'jquery-ui-selectable',
-					),
-				array(
-						'name'           => __( 'jQuery UI Datepicker', 'custom-javascript-editor' ),
-						'identifier'     => 'jquery-ui-datepicker',
-					),
-				array(
-						'name'           => __( 'jQuery UI Resizable', 'custom-javascript-editor' ),
-						'identifier'     => 'jquery-ui-resizable',
-					),
-				array(
-						'name'           => __( 'jQuery UI Dialog', 'custom-javascript-editor' ),
-						'identifier'     => 'jquery-ui-dialog',
-					),
-				array(
-						'name'           => __( 'jQuery UI Button', 'custom-javascript-editor' ),
-						'identifier'     => 'jquery-ui-button',
 					),
 				array(
 						'name'           => __( 'jQuery Schedule', 'custom-javascript-editor' ),
@@ -349,6 +292,7 @@ class Custom_Javascript_Editor {
 					<div style="padding-left: 20px">
 					<h3 style="margin: 0;"><?php esc_html_e( 'Load also:', 'custom-javascript-editor' ); ?></h3><br />
 						<?php $this->scripts_selector(); ?>
+						<p>jQuery and the complete <a href="https://jqueryui.com/">jQuery UI</a> library are already included on all front end page views.</p>
 					</div>
 				</div>
 				<div style="clear:both;"></div>
