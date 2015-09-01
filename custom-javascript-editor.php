@@ -1,10 +1,9 @@
 <?php /*
-Plugin Name:  Custom JavaScript Editor
-Plugin URI:   http://wordpress.org/extend/plugins/custom-javascript-editor/
+Plugin Name:  Custom JavaScript Editor [Forked]
+Plugin URI:   https://github.com/washingtonstateuniversity/Custom-Javascript-Editor
 Description:  Add custom JavaScript to your site from an editor in the WordPress admin
 Version:      1.2
-Author:       Automattic
-Author URI:   http://automattic.com
+Author:       Automattic, Washington State University
 License:      GPLv2 or later
 */
 
