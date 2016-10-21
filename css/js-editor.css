@@ -1,0 +1,56 @@
+#post-body-content {
+	margin-bottom: 20px;
+}
+
+.CodeMirror{
+    margin-bottom: 15px;
+}
+.CodeMirror-fullscreen {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  height: auto;
+  z-index: 199999;
+}
+
+body.fullscreenmode #message {
+    position: absolute;
+    z-index: 9999999;
+    width: 50%;
+    top: 0;
+    left: 50%;
+    margin-left: -38%;    
+}
+
+.customcsspreloader {
+    background-image: url("../images/loader.png");
+    width:20px;
+    height:20px;
+    background-size: 20px;
+    float:left;
+    margin-right:7px;
+    animation: SpinMe 1.0s infinite linear;
+    -webkit-animation: SpinMe 1.0s infinite linear;
+}
+
+@-webkkt-keyframes SpinMe {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100%
+    {
+        -webkit-transform: rotate(360deg);
+        transform:rotate(360deg);
+    }
+}
+@keyframes SpinMe {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100%
+    {
+        -webkit-transform: rotate(360deg);
+        transform:rotate(360deg);
+    }
+}
